@@ -1,0 +1,12 @@
+services:
+  build-image:
+    image: renode-blink
+    command: bash -c "echo build-image completed."
+    build: .
+  build-hex:
+    image: renode-blink
+    command: bash -c "cd nucleo-f446re/BlinkLed && make clean && make"
+    depends_on:
+    - build-image
+    volumes:
+    - ./:/home/app
