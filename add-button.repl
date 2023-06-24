@@ -1,0 +1,3 @@
+bluebutton: Miscellaneous.Button @ gpioc
+    invert: true
+    -> gpioc@13

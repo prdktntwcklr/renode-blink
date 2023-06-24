@@ -5,8 +5,9 @@ services:
     build: .
   build-hex:
     image: renode-blink
-    command: bash -c "cd nucleo-f446re/BlinkLed && make clean && make"
+    user: developer
+    command: bash -c "cd nucleo-f446re/ButtonLed && make clean && make"
     depends_on:
     - build-image
     volumes:
-    - ./:/home/app
+    - ./:/home/developer

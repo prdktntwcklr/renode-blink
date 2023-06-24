@@ -24,5 +24,5 @@ jobs:
       - name: upload build artifact
         uses: actions/upload-artifact@v3
         with:
-            name: BlinkLed-${{ steps.vars.outputs.sha_short }}
-            path: nucleo-f446re/BlinkLed/build/BlinkLed.hex
+            name: ButtonLed-${{ steps.vars.outputs.sha_short }}
+            path: nucleo-f446re/ButtonLed/build/ButtonLed.hex
