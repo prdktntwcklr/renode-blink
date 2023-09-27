@@ -23,28 +23,22 @@ RUN mkdir -p /home/developer && \
     chmod 0440 /etc/sudoers.d/developer && \
     chown $userId:$groupId -R /home/developer
 
-ARG RENODE_VERSION=1.13.3
+# Install Toolchain (takes quite some time)
+RUN wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2 -O gcc-arm-none-eabi.tar.bz2 && \
+    mkdir gcc-arm-none-eabi && tar xjfv gcc-arm-none-eabi.tar.bz2 -C gcc-arm-none-eabi --strip-components 1 && \
+    rm gcc-arm-none-eabi.tar.bz2
 
-USER developer
-ENV HOME /home/developer
-WORKDIR /home/developer
+# Set up the compiler path
+ENV PATH $PATH:/gcc-arm-none-eabi/bin
 
 # Install Renode
-USER root
+ARG RENODE_VERSION=1.14.0
+
 RUN wget https://github.com/renode/renode/releases/download/v${RENODE_VERSION}/renode_${RENODE_VERSION}_amd64.deb && \
     apt-get update && \
     apt-get install -y --no-install-recommends ./renode_${RENODE_VERSION}_amd64.deb python3-dev && \
     rm ./renode_${RENODE_VERSION}_amd64.deb && \
     rm -rf /var/lib/apt/lists/*
 RUN pip3 install -r /opt/renode/tests/requirements.txt --no-cache-dir
-
-# Install Toolchain
-USER developer
-RUN wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2 -O gcc-arm-none-eabi.tar.bz2 && \
-    mkdir gcc-arm-none-eabi && tar xjfv gcc-arm-none-eabi.tar.bz2 -C gcc-arm-none-eabi --strip-components 1 && \
-    rm gcc-arm-none-eabi.tar.bz2
-
-# Set up the compiler path
-ENV PATH $PATH:/home/developer/gcc-arm-none-eabi/bin
 
 CMD renode

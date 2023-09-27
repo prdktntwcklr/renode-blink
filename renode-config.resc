@@ -6,7 +6,8 @@ mach create
 machine LoadPlatformDescription @nucleo_f446re.repl
 machine LoadPlatformDescription @add-button.repl
 
-# sysbus Tag <0x40023C00, 0x40023C03> "FLASH_ACR" 0x0
+sysbus.cpu0 LogFunctionNames true
+sysbus LogAllPeripheralsAccess true
 
 # Create a Reset Macro
 macro reset

@@ -1,3 +1,7 @@
 bluebutton: Miscellaneous.Button @ gpioc
     invert: true
     -> gpioc@13
+
+// fix (?), see: https://github.com/renode/renode/issues/300
+flash_controller: MTD.STM32F4_FlashController @ sysbus 0x40023C00
+    flash: flash0
