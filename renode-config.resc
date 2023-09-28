@@ -3,8 +3,7 @@ $bin?=@nucleo-f446re/ButtonLed/build/ButtonLed.elf
 
 # Create Machine & Load config
 mach create
-machine LoadPlatformDescription @nucleo_f446re.repl
-machine LoadPlatformDescription @add-button.repl
+machine LoadPlatformDescription @nucleo_f446re_custom.repl
 
 sysbus.cpu0 LogFunctionNames true
 sysbus LogAllPeripheralsAccess true
