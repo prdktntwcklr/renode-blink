@@ -20,6 +20,8 @@ jobs:
       - name: determine short GIT hash
         id:   vars
         run:  echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: print toolchain version
+        run:  arm-none-eabi-gcc --version
       - name: build hex file
         run:  cd nucleo-f446re/ButtonLed && make
       - name: upload build artifact
