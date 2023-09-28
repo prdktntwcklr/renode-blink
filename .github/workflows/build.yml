@@ -1,8 +1,8 @@
-name: Tests
+name: Build
 
 on:
   pull_request:
-    branches: [ main, dev ]
+    branches: [ main ]
 
   # allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -12,17 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - uses: carlosperate/arm-none-eabi-gcc-action@v1
+      - run: arm-none-eabi-gcc --version
       - name: checkout code
         uses: actions/checkout@v3
       - name: determine short GIT hash
         id:   vars
         run:  echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - name: build docker image
-        run:  docker compose build
       - name: build hex file
-        run:  docker compose run --rm build-hex
+        run:  cd nucleo-f446re/ButtonLed && make
       - name: upload build artifact
         uses: actions/upload-artifact@v3
         with:
-            name: BlinkLed-${{ steps.vars.outputs.sha_short }}
-            path: nucleo-f446re/BlinkLed/build/BlinkLed.hex
+            name: ButtonLed-${{ steps.vars.outputs.sha_short }}
+            path: nucleo-f446re/ButtonLed/build/ButtonLed.hex

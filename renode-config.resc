@@ -1,0 +1,19 @@
+# Filename: renode-config.resc
+$bin?=@nucleo-f446re/ButtonLed/build/ButtonLed.elf
+
+# Create Machine & Load config
+mach create
+machine LoadPlatformDescription @nucleo_f446re.repl
+machine LoadPlatformDescription @add-button.repl
+
+sysbus.cpu0 LogFunctionNames true
+sysbus LogAllPeripheralsAccess true
+
+# Create a Reset Macro
+macro reset
+"""
+    sysbus LoadELF $bin
+"""
+
+# Run the Reset Macro
+runMacro $reset
