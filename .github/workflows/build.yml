@@ -9,11 +9,12 @@ on:
 
 jobs:
   build-hex:
+    name: build Hex file with Make
     runs-on: ubuntu-latest
+    container:
+      image: stronglytyped/arm-none-eabi-gcc:latest
     timeout-minutes: 5
     steps:
-      - uses: carlosperate/arm-none-eabi-gcc-action@v1
-      - run: arm-none-eabi-gcc --version
       - name: checkout code
         uses: actions/checkout@v3
       - name: determine short GIT hash
@@ -24,5 +25,5 @@ jobs:
       - name: upload build artifact
         uses: actions/upload-artifact@v3
         with:
-            name: ButtonLed-${{ steps.vars.outputs.sha_short }}
-            path: nucleo-f446re/ButtonLed/build/ButtonLed.hex
+          name: ButtonLed-${{ steps.vars.outputs.sha_short }}
+          path: nucleo-f446re/ButtonLed/build/ButtonLed.hex
