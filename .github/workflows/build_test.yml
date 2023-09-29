@@ -1,0 +1,46 @@
+name: Build and Test
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-hex:
+    name: Build Hex file
+    runs-on: ubuntu-latest
+    container:
+      image: stronglytyped/arm-none-eabi-gcc:latest
+    timeout-minutes: 5
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+      - name: print toolchain version
+        run:  arm-none-eabi-gcc --version
+      - name: build hex file
+        run:  cd nucleo-f446re/ButtonLed && make
+      - name: upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ButtonLed
+          retention-days: 1
+          path: |
+            nucleo-f446re/ButtonLed/build/ButtonLed.elf
+            nucleo-f446re/ButtonLed/build/ButtonLed.hex
+  run-tests:
+    name: Run Robot tests
+    needs: build-hex
+    runs-on: ubuntu-latest
+    container:
+      image: antmicro/renode:latest
+      options: --user root
+    timeout-minutes: 5
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+      - name: download hex file
+        uses: actions/download-artifact@v3
+        with:
+          name: ButtonLed
+          path: nucleo-f446re/ButtonLed/build
+      - name: run tests
+        run: renode-test tests/test-button.robot
