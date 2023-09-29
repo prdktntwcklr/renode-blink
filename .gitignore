@@ -1,0 +1,4 @@
+logs/
+snapshots/
+*.html
+*.xml
