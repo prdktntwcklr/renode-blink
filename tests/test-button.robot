@@ -12,21 +12,21 @@ Button Press should Toggle LED
     Execute Command         sysbus LoadELF @${CURDIR}/../nucleo-f446re/ButtonLed/build/ButtonLed.elf
 
     Start Emulation
-	
-	${LedState}=  Execute Command  sysbus.gpioa.greenled2 State
-	Should Be Equal         ${LedState.strip()}    False
-	
+    
+    ${LedState}=  Execute Command  sysbus.gpioa.greenled2 State
+    Should Be Equal         ${LedState.strip()}    False
+    
     Execute Command         sysbus.gpioc.bluebutton Press
     sleep                   100milliseconds
     Execute Command         sysbus.gpioc.bluebutton Release
-	
-	${LedState}=  Execute Command  sysbus.gpioa.greenled2 State
-	Should Be Equal         ${LedState.strip()}    True
+    
+    ${LedState}=  Execute Command  sysbus.gpioa.greenled2 State
+    Should Be Equal         ${LedState.strip()}    True
 
     Execute Command         sysbus.gpioc.bluebutton Press
     sleep                   100milliseconds
     Execute Command         sysbus.gpioc.bluebutton Release
 
-	${LedState}=  Execute Command  sysbus.gpioa.greenled2 State
-	Should Be Equal         ${LedState.strip()}    False
+    ${LedState}=  Execute Command  sysbus.gpioa.greenled2 State
+    Should Be Equal         ${LedState.strip()}    False
  

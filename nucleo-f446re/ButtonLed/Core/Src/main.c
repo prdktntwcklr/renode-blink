@@ -98,12 +98,12 @@ int main(void)
     /* USER CODE BEGIN 3 */
     if(!button_pressed && HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin))
     {
-        button_pressed = true;
+      button_pressed = true;
     }
     else if(button_pressed && !HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin))
     {
-        HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-        button_pressed = false;
+      HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+      button_pressed = false;
     }
   }
   /* USER CODE END 3 */
