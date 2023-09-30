@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-hex:
+  build-project:
     name: Build Project
     runs-on: ubuntu-latest
     container:
@@ -30,7 +30,7 @@ jobs:
             nucleo-f446re/ButtonLed/build/ButtonLed.hex
   run-tests:
     name: Run Robot tests
-    needs: build-hex
+    needs: build-project
     runs-on: ubuntu-latest
     container:
       image: antmicro/renode:latest
@@ -54,6 +54,5 @@ jobs:
           name: TestResults
           retention-days: 1
           path: |
-            robot_output.xml
             log.html
             report.html
